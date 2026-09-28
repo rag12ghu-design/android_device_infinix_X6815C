@@ -100,7 +100,7 @@ jobs:
       - name: Clone Kernel Tree (Prebuilts)
         run: |
           cd ~/android/lineage
-          git clone --depth=1 https://github.com/mt6877-transsion/android_device_infinix_X6815D-kernel device/infinix/X6815D-kernel
+          git clone --depth=1 https://github.com/${{ github.repository_owner }}/android_device_infinix_X6815C-kernel device/infinix/X6815C-kernel
 
       - name: Setup CCache
         run: |

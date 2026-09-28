@@ -5,7 +5,7 @@
 #
 
 DEVICE_PATH := device/infinix/X6815C
-KERNEL_PATH := device/infinix/X6815D-kernel
+KERNEL_PATH := device/infinix/X6815C-kernel
 
 # Architecture
 TARGET_ARCH := arm64
@@ -124,7 +124,7 @@ BOARD_USES_METADATA_PARTITION := true
 PRODUCT_FS_COMPRESSION := true
 
 # OTA Updates
-TARGET_OTA_ASSERT_DEVICE := X6815C,Infinix-X6815C,x6815c,x6815c_h777,X6815D,Infinix-X6815D,x6815d
+TARGET_OTA_ASSERT_DEVICE := X6815C,Infinix-X6815C,x6815c,x6815c_h777
 
 # Platform
 TARGET_BOARD_PLATFORM := mt6877
