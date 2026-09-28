@@ -1,33 +1,31 @@
 #
-# Copyright (C) 2025 The LineageOS Project
+# Copyright (C) 2024-2026 The LineageOS Project
 #
 # SPDX-License-Identifier: Apache-2.0
 #
 
 DEVICE_PATH := device/infinix/X6815C
-KERNEL_PATH := device/infinix/X6815C-kernel
+
+# A/B
+AB_OTA_UPDATER := true
+AB_OTA_PARTITIONS += \
+    boot \
+    vendor \
+    product \
+    vbmeta_vendor \
+    system \
+    system_ext \
+    vbmeta_system
+BOARD_USES_RECOVERY_AS_BOOT := true
 
 # Architecture
 TARGET_ARCH := arm64
-TARGET_ARCH_VARIANT := armv8-2a-dotprod
+TARGET_ARCH_VARIANT := armv8-2a
 TARGET_CPU_ABI := arm64-v8a
-TARGET_CPU_ABI2 :=
-TARGET_CPU_VARIANT := cortex-a76
-TARGET_CPU_VARIANT_RUNTIME := cortex-a76
+TARGET_CPU_ABI2 := 
+TARGET_CPU_VARIANT := cortex-a78
+TARGET_CPU_VARIANT_RUNTIME := cortex-a55
 
-# Enable 64-bit for non-zygote.
-ZYGOTE_FORCE_64 := true
-
-# Force any prefer32 targets to be compiled as 64 bit.
-IGNORE_PREFER32_ON_DEVICE := true
-
-# Include 64-bit mediaserver to support 64-bit only devices
-TARGET_DYNAMIC_64_32_MEDIASERVER := true
-
-# Include 64-bit drmserver to support 64-bit only devices
-TARGET_DYNAMIC_64_32_DRMSERVER := true
-
-# Build the 32 bit targets
 TARGET_2ND_ARCH := arm
 TARGET_2ND_ARCH_VARIANT := armv8-2a
 TARGET_2ND_CPU_ABI := armeabi-v7a
@@ -35,176 +33,82 @@ TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a55
 TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a55
 
-# Build Hacks
-BUILD_BROKEN_DUP_RULES := true
-BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
-
-# Boot Image
-BOARD_KERNEL_BASE := 0x40078000
-BOARD_KERNEL_OFFSET := 0x00008000
-BOARD_KERNEL_PAGESIZE := 2048
-BOARD_KERNEL_TAGS_OFFSET := 0x07c08000
-BOARD_RAMDISK_OFFSET := 0x11088000
-BOARD_DTB_OFFSET := 0x07c08000
-
-BOARD_BOOTIMG_HEADER_VERSION := 2
-BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-
-BOARD_KERNEL_CMDLINE += bootopt=64S3,32N2,64N2
-
-BOARD_MKBOOTIMG_ARGS := --base $(BOARD_KERNEL_BASE)
-BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE)
-BOARD_MKBOOTIMG_ARGS += --kernel_offset $(BOARD_KERNEL_OFFSET)
-BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
-BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
-BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
-BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
-
 # Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := X6815C
+TARGET_BOOTLOADER_BOARD_NAME := Infinix-X6815C
 TARGET_NO_BOOTLOADER := true
 
 # Display
-TARGET_SCREEN_DENSITY := 392
+TARGET_SCREEN_DENSITY := 480
 
 # Kernel
-TARGET_NO_KERNEL_OVERRIDE := true
-TARGET_KERNEL_SOURCE := $(KERNEL_PATH)/kernel-headers
-
+BOARD_BOOT_HEADER_VERSION := 2
+BOARD_KERNEL_BASE := 0x40078000
+BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 buildvariant=user
+BOARD_KERNEL_PAGESIZE := 2048
+BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+BOARD_KERNEL_IMAGE_NAME := Image.gz
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_KERNEL_SEPARATED_DTBO := true
+TARGET_KERNEL_CONFIG := X6815C_defconfig
+TARGET_KERNEL_SOURCE := kernel/infinix/X6815C
 
-LOCAL_KERNEL := $(KERNEL_PATH)/Image.gz
-PRODUCT_COPY_FILES += \
-    $(LOCAL_KERNEL):kernel
-
-BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_PATH)/dtb
-BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_PATH)/dtbo.img
-BOARD_VENDOR_KERNEL_MODULES := $(wildcard $(KERNEL_PATH)/vendor-modules/*.ko)
+# Kernel - prebuilt
+TARGET_FORCE_PREBUILT_KERNEL := true
+ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilts/kernel
+TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilts/dtb.img
+BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
+BOARD_INCLUDE_DTB_IN_BOOTIMG := 
+BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilts/dtbo.img
+BOARD_KERNEL_SEPARATED_DTBO := 
+endif
 
 # Partitions
-SSI_PARTITIONS := product system system_ext
-TREBLE_PARTITIONS := vendor
-ALL_PARTITIONS := $(SSI_PARTITIONS) $(TREBLE_PARTITIONS)
-
-ifneq ($(WITH_GMS),true)
-$(foreach p, $(call to-upper, $(SSI_PARTITIONS)), \
-    $(eval BOARD_$(p)IMAGE_FILE_SYSTEM_TYPE := ext4) \
-    $(eval TARGET_COPY_OUT_$(p) := $(call to-lower, $(p))))
-
-$(foreach p, $(call to-upper, $(TREBLE_PARTITIONS)), \
-    $(eval BOARD_$(p)IMAGE_FILE_SYSTEM_TYPE := erofs) \
-    $(eval TARGET_COPY_OUT_$(p) := $(call to-lower, $(p))))
-else
-$(foreach p, $(call to-upper, $(ALL_PARTITIONS)), \
-    $(eval BOARD_$(p)IMAGE_FILE_SYSTEM_TYPE := erofs) \
-    $(eval TARGET_COPY_OUT_$(p) := $(call to-lower, $(p))))
-endif
-
-BOARD_FLASH_BLOCK_SIZE := 131072 # BOARD_KERNEL_PAGESIZE * 64
-BOARD_DTBOIMG_PARTITION_SIZE := 8388608
+BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_BOOTIMAGE_PARTITION_SIZE := 41943040
-
-BOARD_SUPER_PARTITION_SIZE := 8490450944
-BOARD_SUPER_PARTITION_GROUPS := mtk_dynamic_partitions
-
-BOARD_MTK_DYNAMIC_PARTITIONS_SIZE :=  8486256640
-BOARD_MTK_DYNAMIC_PARTITIONS_PARTITION_LIST := $(ALL_PARTITIONS)
-BOARD_MTK_DYNAMIC_PARTITIONS_SIZE := $(shell expr $(BOARD_SUPER_PARTITION_SIZE) - 4194304)
-
-ifneq ($(WITH_GMS),true)
--include vendor/lineage/config/BoardConfigReservedSize.mk
-endif
-
-TARGET_COPY_OUT_SYSTEM_EXT := system_ext
-TARGET_COPY_OUT_PRODUCT := product
-TARGET_COPY_OUT_VENDOR := vendor
-
-# Data
-BOARD_USES_METADATA_PARTITION := true
-PRODUCT_FS_COMPRESSION := true
-
-# OTA Updates
-TARGET_OTA_ASSERT_DEVICE := X6815C,Infinix-X6815C,x6815c,x6815c_h777
+BOARD_DTBOIMG_PARTITION_SIZE := 8388608
+BOARD_SUPER_PARTITION_SIZE := 11474821120
+BOARD_SUPER_PARTITION_GROUPS := infinix_dynamic_partitions
+BOARD_INFINIX_DYNAMIC_PARTITIONS_PARTITION_LIST := \
+    system \
+    system_ext \
+    product \
+    vendor
+BOARD_INFINIX_DYNAMIC_PARTITIONS_SIZE := 11470626816
 
 # Platform
 TARGET_BOARD_PLATFORM := mt6877
-BOARD_HAS_MTK_HARDWARE := true
 
 # Properties
-TARGET_SYSTEM_PROP += $(DEVICE_PATH)/configs/properties/system.prop
-TARGET_VENDOR_PROP += $(DEVICE_PATH)/configs/properties/vendor.prop
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
+TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
+TARGET_PRODUCT_PROP += $(DEVICE_PATH)/product.prop
+TARGET_SYSTEM_EXT_PROP += $(DEVICE_PATH)/system_ext.prop
+TARGET_SYSTEM_DLKM_PROP += $(DEVICE_PATH)/system_dlkm.prop
+TARGET_ODM_PROP += $(DEVICE_PATH)/odm.prop
+TARGET_ODM_DLKM_PROP += $(DEVICE_PATH)/odm_dlkm.prop
+TARGET_VENDOR_DLKM_PROP += $(DEVICE_PATH)/vendor_dlkm.prop
 
 # Recovery
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/init/fstab.mt6877
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.mt6877
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
+TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
-BOARD_USES_RECOVERY_AS_BOOT := true
+
+# Security patch level
+VENDOR_SECURITY_PATCH := 2023-07-05
+
+# Verified Boot
+BOARD_AVB_ENABLE := true
+BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
 
 # SELinux
-include device/mediatek/sepolicy_vndr/SEPolicy.mk
-BUILD_BROKEN_VENDOR_PROPERTY_NAMESPACE := true
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
 SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/public
 
-# Verified Boot
-BOARD_AVB_ENABLE := true
-BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --set_hashtree_disabled_flag
-BOARD_AVB_ALGORITHM := SHA256_RSA2048
-BOARD_AVB_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
-
-# Enable chain partition for system.
-BOARD_AVB_VBMETA_SYSTEM := system system_ext product
-BOARD_AVB_VBMETA_SYSTEM_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
-BOARD_AVB_VBMETA_SYSTEM_ALGORITHM := SHA256_RSA2048
-BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := 0
-BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 2
-
-# Enable chain partition for vendor.
-BOARD_AVB_VBMETA_VENDOR := vendor
-BOARD_AVB_VBMETA_VENDOR_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
-BOARD_AVB_VBMETA_VENDOR_ALGORITHM := SHA256_RSA2048
-BOARD_AVB_VBMETA_VENDOR_ROLLBACK_INDEX := 0
-BOARD_AVB_VBMETA_VENDOR_ROLLBACK_INDEX_LOCATION := 4
-
-# Enable chained vbmeta for boot images
-BOARD_AVB_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
-BOARD_AVB_BOOT_ALGORITHM := SHA256_RSA2048
-BOARD_AVB_BOOT_ROLLBACK_INDEX := 0
-BOARD_AVB_BOOT_ROLLBACK_INDEX_LOCATION := 3
-
-# Vintf
-DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
-    $(DEVICE_PATH)/configs/vintf/device_framework_compatibility_matrix.xml \
-    hardware/mediatek/vintf/mediatek_framework_compatibility_matrix.xml
-
-DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/configs/vintf/manifest.xml
-DEVICE_MATRIX_FILE := $(DEVICE_PATH)/configs/vintf/compatibility_matrix.xml
-
-# VNDK
-BOARD_VNDK_VERSION := current
-
-# RIL
-ENABLE_VENDOR_RIL_SERVICE := true
-
-# Wi-Fi
-WPA_SUPPLICANT_VERSION := VER_0_8_X
-BOARD_WPA_SUPPLICANT_DRIVER := NL80211
-BOARD_HOSTAPD_DRIVER := NL80211
-WIFI_DRIVER_FW_PATH_PARAM := "/dev/wmtWifi"
-WIFI_DRIVER_FW_PATH_STA := "STA"
-WIFI_DRIVER_FW_PATH_AP := "AP"
-WIFI_DRIVER_FW_PATH_P2P := "P2P"
-WIFI_DRIVER_STATE_CTRL_PARAM := "/dev/wmtWifi"
-WIFI_DRIVER_STATE_ON := "1"
-WIFI_DRIVER_STATE_OFF := "0"
-WIFI_HAL_INTERFACE_COMBINATIONS := {{{STA}, 2}}
-WIFI_HAL_INTERFACE_COMBINATIONS += ,{{{AP}, 2},}
-WIFI_HAL_INTERFACE_COMBINATIONS += ,{{{STA}, 1}, {{AP}, 1}}
-WIFI_HAL_INTERFACE_COMBINATIONS += ,{{{STA}, 1}, {{P2P}, 1}}
-WIFI_HAL_INTERFACE_COMBINATIONS += ,{{{STA}, 1}, {{NAN}, 1}}
-WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
-WIFI_FEATURE_HOSTAPD_11AX := true
+# VINTF
+DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
 
 # Inherit the proprietary files
 include vendor/infinix/X6815C/BoardConfigVendor.mk
