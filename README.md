@@ -35,7 +35,7 @@ This device tree works in conjunction with the corresponding vendor and kernel r
 | :--- | :--- | :--- | :--- |
 | **Device Tree** | [`android_device_infinix_X6815C`](https://github.com/rag12ghu-design/android_device_infinix_X6815C) | `lineage-22.2` | Core device configuration, overlays, sepolicy, init scripts |
 | **Vendor Tree** | [`android_vendor_infinix_X6815C`](https://github.com/rag12ghu-design/android_vendor_infinix_X6815C) | `lineage-22.2` | 2,561 proprietary binaries & HALs dumped from live hardware |
-| **Kernel Tree** | [`android_device_infinix_X6815C-kernel`](https://github.com/rag12ghu-design/android_device_infinix_X6815C-kernel) | `lineage-22.2` | Stock `Image.gz` (5.10.168 GKI) + 15 live hardware `.ko` modules |
+| **Kernel Tree** | [`android_device_infinix_X6815C-kernel`](https://github.com/rag12ghu-design/android_device_infinix_X6815C-kernel) | `lineage-22.2` | Stock `Image.gz` (Linux 4.19.191+) + 15 live hardware `.ko` modules |
 
 ---
 
@@ -43,7 +43,7 @@ This device tree works in conjunction with the corresponding vendor and kernel r
 
 * **Stock Firmware Baseline:** Extracted from official firmware build `X6815C-FW-V345` using `aospdtgen` and EROFS extraction tools.
 * **Proprietary Vendor Blobs:** Direct live hardware dump from `/vendor` and `/system/vendor` via root ADB on physical test unit `09424252CN004968`.
-* **Kernel & Modules:** Stock GKI `Image.gz` (5.10.168-android12-9-00002-g49d2112ae1a8-ab10534222) verified alongside all active in-tree touchscreen, display, and peripheral kernel modules.
+* **Kernel & Modules:** Stock Linux 4.19.191+ `Image.gz` (MediaTek MT6877, Boot Header v2) verified alongside all active in-tree touchscreen, display, and peripheral kernel modules.
 * **Device Isolation:** Completely purged of any cross-variant (`X6815D`) artifacts to ensure 100% hardware fidelity.
 
 ---
