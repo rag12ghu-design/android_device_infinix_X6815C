@@ -1,0 +1,140 @@
+name: Build LineageOS for Infinix X6815C
+
+on:
+  workflow_dispatch:
+    inputs:
+      rom_branch:
+        description: 'LineageOS Branch (e.g. lineage-22.2 or lineage-21.0)'
+        required: true
+        default: 'lineage-22.2'
+      build_type:
+        description: 'Build Type (userdebug, eng, or user)'
+        required: true
+        default: 'userdebug'
+      vendor_repo:
+        description: 'GitHub repo for vendor tree (username/repo)'
+        required: true
+        default: 'auto'
+
+jobs:
+  build:
+    name: Compile LineageOS ROM
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+
+    steps:
+      - name: Free Disk Space on Runner
+        run: |
+          echo "Free disk space before cleanup:"
+          df -h
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo docker system prune -af || true
+          echo "Free disk space after cleanup:"
+          df -h
+
+      - name: Set up Swap Space (16 GB)
+        run: |
+          sudo fallocate -l 16G /swapfile || sudo dd if=/dev/zero of=/swapfile bs=1M count=16384
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+          free -h
+
+      - name: Install Build Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            bc bison build-essential ccache curl flex g++-multilib gcc-multilib git \
+            git-lfs gnupg gperf imagemagick lib32readline-dev lib32z1-dev libelf-dev \
+            liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 \
+            libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip \
+            zlib1g-dev python3 python-is-python3
+          
+          # Install Google Repo tool
+          mkdir -p ~/bin
+          curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+          chmod a+x ~/bin/repo
+          echo "$HOME/bin" >> $GITHUB_PATH
+
+      - name: Configure Git Identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global color.ui false
+
+      - name: Initialize LineageOS Manifest
+        run: |
+          mkdir -p ~/android/lineage
+          cd ~/android/lineage
+          repo init -u https://github.com/LineageOS/android.git -b ${{ github.event.inputs.rom_branch }} --git-lfs --depth=1
+
+      - name: Sync Minimal Source Tree
+        run: |
+          cd ~/android/lineage
+          repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune
+
+      - name: Clone Device Tree (X6815C)
+        uses: actions/checkout@v4
+        with:
+          path: ~/android/lineage/device/infinix/X6815C
+
+      - name: Clone Vendor Tree (X6815C)
+        run: |
+          cd ~/android/lineage
+          VENDOR_REPO="${{ github.event.inputs.vendor_repo }}"
+          if [ "$VENDOR_REPO" = "auto" ]; then
+            VENDOR_REPO="${{ github.repository_owner }}/android_vendor_infinix_X6815C"
+          fi
+          echo "Cloning vendor tree from https://github.com/${VENDOR_REPO}..."
+          git clone --depth=1 https://github.com/${VENDOR_REPO} vendor/infinix/X6815C
+
+      - name: Clone Kernel Tree (Prebuilts)
+        run: |
+          cd ~/android/lineage
+          git clone --depth=1 https://github.com/mt6877-transsion/android_device_infinix_X6815D-kernel device/infinix/X6815D-kernel
+
+      - name: Setup CCache
+        run: |
+          export USE_CCACHE=1
+          export CCACHE_DIR=~/.ccache
+          ccache -M 30G
+          ccache -z
+
+      - name: Build LineageOS
+        run: |
+          cd ~/android/lineage
+          source build/envsetup.sh
+          lunch lineage_X6815C-${{ github.event.inputs.build_type }} || lunch lineage_X6815C-ap2a-${{ github.event.inputs.build_type }}
+          mka bacon -j$(nproc --all)
+
+      - name: Prepare Release Artifacts
+        run: |
+          cd ~/android/lineage/out/target/product/X6815C
+          mkdir -p ~/artifacts
+          cp lineage-*.zip ~/artifacts/ || true
+          cp boot.img ~/artifacts/ || true
+          cp recovery.img ~/artifacts/ || true
+          cp dtbo.img ~/artifacts/ || true
+          ls -la ~/artifacts
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: LineageOS-X6815C-Build
+          path: ~/artifacts/*
+          retention-days: 7
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') || success()
+        with:
+          tag_name: build-${{ github.run_id }}
+          name: LineageOS for Infinix Zero 5G 2023 (X6815C)
+          draft: false
+          prerelease: false
+          files: ~/artifacts/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
