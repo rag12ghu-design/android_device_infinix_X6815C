@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 allow fsck tmpfs:blk_file { read write ioctl };
 allow fsck tranfs_block_device:blk_file rw_file_perms;
 allow fsck tranfs_block_device:lnk_file r_file_perms;

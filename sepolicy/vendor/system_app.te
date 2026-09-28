@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 # FM Radio
 get_prop(system_app, vendor_mtk_wmt_prop)
 get_prop(system_app, vendor_mtk_default_prop)

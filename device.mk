@@ -123,5 +123,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)
 
+# Vendor logtag properties
+$(call inherit-product-if-exists, $(LOCAL_PATH)/vendor_logtag.mk)
+
 # Inherit the proprietary files
 $(call inherit-product, vendor/infinix/X6815C/X6815C-vendor.mk)
+

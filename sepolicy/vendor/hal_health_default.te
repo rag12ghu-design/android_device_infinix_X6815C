@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 allow hal_health_default sysfs_battery:file { getattr open read };
 allow hal_health_default sysfs_battery:dir search;
 allow hal_health_default sysfs_batteryinfo:file { getattr open read };

@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 # allow NFC process to call into the NFC HAL
 allow nfc nfc_data_file:dir create_dir_perms;
 allow nfc nxpnfc_hwservice:hwservice_manager find;

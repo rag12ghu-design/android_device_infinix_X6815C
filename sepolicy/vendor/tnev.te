@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 type tnev, domain, halserverdomain;
 type tnev_exec, exec_type, file_type, vendor_file_type;
 

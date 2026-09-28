@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 allow hal_audio_default ccci_aud_device:chr_file rw_file_perms;
 allow hal_audio_default ebc_device:chr_file rw_file_perms;
 allow hal_audio_default mtk_audiohal_data_file:dir create_dir_perms;

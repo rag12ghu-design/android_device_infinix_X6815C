@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 allow init sysfs_devices_block:file rw_file_perms;
 allow init tranfs_block_device:blk_file { read relabelto };
 allow init tranfs_block_device:lnk_file { getattr read relabelto };

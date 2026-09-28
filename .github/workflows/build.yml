@@ -1,4 +1,12 @@
-name: Build LineageOS for Infinix X6815C
+#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# Automated LineageOS 22.2 (Android 15) CI/CD Build Pipeline
+# Target: Infinix Zero 5G 2023 (X6815C) [MT6877]
+#
+
+name: Build LineageOS 22.2 for Infinix Zero 5G 2023 (X6815C)
+
 
 on:
   workflow_dispatch:

@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 allow hal_sensors_default hf_manager_device:chr_file rw_file_perms;
 allow hal_sensors_default nvcfg_file:dir create_dir_perms;
 allow hal_sensors_default nvcfg_file:file create_file_perms;

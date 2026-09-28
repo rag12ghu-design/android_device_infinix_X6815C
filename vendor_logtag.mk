@@ -1,8 +1,17 @@
+#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# Vendor logging tags configuration for Infinix Zero 5G 2023 (X6815C)
+#
+
 ifeq (eng,$(TARGET_BUILD_VARIANT))
 VENDOR_LOG_LEVEL=I
 else
 VENDOR_LOG_LEVEL=S
 endif
+
 
 PRODUCT_VENDOR_PROPERTIES += \
     persist.log.tag.RILMUXD=$(VENDOR_LOG_LEVEL) \

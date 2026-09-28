@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 # Fingerprint
 gf.debug.                                   u:object_r:vendor_gf_debug_prop:s0
 

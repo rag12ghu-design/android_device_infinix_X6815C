@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 jpeg.exif.icc.profile                       u:object_r:exported_default_prop:s0
 
 gce.test                                    u:object_r:exported_default_prop:s0

@@ -1,2 +1,7 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 # Allow Keymint to set MTK TEEI Props
 set_prop(hal_keymint_default, vendor_mtk_soter_teei_prop)

@@ -1,1 +1,6 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 allow update_engine tkv_block_device:blk_file rw_file_perms;

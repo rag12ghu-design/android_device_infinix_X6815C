@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 binder_call(mtk_hal_camera, trancamserver)
 
 allow mtk_hal_camera cml421_ois_device:chr_file rw_file_perms;

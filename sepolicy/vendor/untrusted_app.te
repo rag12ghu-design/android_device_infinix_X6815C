@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 allow untrusted_app unlabeled:filesystem getattr;
 
 get_prop(untrusted_app, vendor_camera_prop)

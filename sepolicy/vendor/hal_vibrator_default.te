@@ -1,2 +1,7 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 allow hal_vibrator_default sysfs_leds:dir search;
 allow hal_vibrator_default sysfs_leds:file rw_file_perms;

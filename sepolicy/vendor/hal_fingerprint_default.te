@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 # Allow to r/w fingerprint sysfs
 allow hal_fingerprint_default vendor_sysfs_fingerprint:{file chr_file} rw_file_perms;
 allow hal_fingerprint_default vendor_sysfs_fingerprint:dir r_dir_perms;

@@ -1,1 +1,6 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 get_prop(vtservice, vendor_mtk_vendor_vt_prop)

@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 # Camera
 type sysfs_tran_cam_file, fs_type, sysfs_type;
 type transsion_camera_data_file, file_type, data_file_type, mlstrustedobject;

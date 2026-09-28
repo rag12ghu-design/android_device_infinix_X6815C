@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 allow mtk_hal_power proc_meminfo:file r_file_perms;
 allow mtk_hal_power proc_gesture_function:file rw_file_perms;
 allow mtk_hal_power proc_gesture_state:file rw_file_perms;

@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 allow hal_nfc_default nxpnfc_hwservice:hwservice_manager { add find };
 
 set_prop(hal_nfc, vendor_nfc_prop)

@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 allow cameraserver dmabuf_system_heap_device:chr_file { ioctl read getattr lock map open watch watch_reads };
 allow cameraserver { sysfs_sub_torch_file sysfs_torch_file sysfs_wide_torch_file }:file rw_file_perms;
 

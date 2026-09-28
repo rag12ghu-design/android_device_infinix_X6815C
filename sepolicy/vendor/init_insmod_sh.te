@@ -1,3 +1,8 @@
+﻿#
+# Copyright (C) 2024-2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 # Allow init.insmod.sh to read cmdline
 allow init_insmod_sh proc_cmdline:file r_file_perms;
 
