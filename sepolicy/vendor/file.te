@@ -1,0 +1,42 @@
+# Camera
+type sysfs_tran_cam_file, fs_type, sysfs_type;
+type transsion_camera_data_file, file_type, data_file_type, mlstrustedobject;
+type vendor_watermark_data_file, file_type, data_file_type, mlstrustedobject;
+type vendor_arcsoft_data_file, file_type, data_file_type, mlstrustedobject;
+type vendor_megvii_data_file, file_type, data_file_type, mlstrustedobject;
+# DT2W gesture
+type vendor_sysfs_gesture, fs_type, sysfs_type;
+
+# Data
+type storage_dbg_data_file, file_type, core_data_file_type, data_file_type;
+
+# Fingerprint
+type silead_fpd_data_file, data_file_type, file_type;
+type vendor_sysfs_fingerprint, fs_type, sysfs_type;
+type vendor_fingerprint_data_file, data_file_type, file_type;
+
+type vendor_sysfs_display, fs_type, sysfs_type;
+type vendor_sysfs_mali, fs_type, sysfs_type;
+
+# Gesture
+type proc_gesture_function, fs_type, proc_type, sysfs_type;
+type proc_gesture_state, fs_type, proc_type, sysfs_type;
+
+# NFC
+type nfc_vendor_data_file, file_type, data_file_type;
+type nxp_nfc_firmware_file, file_type, vendor_file_type;
+
+# OTG
+type sysfs_OTG_STATE_file, fs_type, sysfs_type;
+type sysfs_OTG_CTL_file, fs_type, sysfs_type;
+
+# Torch
+type sysfs_sub_torch_file, fs_type, sysfs_type;
+type sysfs_torch_file, fs_type, sysfs_type;
+type sysfs_wide_torch_file, fs_type, sysfs_type;
+
+# VMAX
+type aw87xxx_vmax, fs_type, sysfs_type;
+
+# TNE
+type tneengine_tnek_file, dev_type, mlstrustedobject;
