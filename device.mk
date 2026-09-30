@@ -110,6 +110,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/fstab.mt6877:$(TARGET_VENDOR_RAMDISK_OUT)/first_stage_ramdisk/fstab.mt6877 \
     $(LOCAL_PATH)/rootdir/etc/fstab.emmc:$(TARGET_VENDOR_RAMDISK_OUT)/first_stage_ramdisk/fstab.emmc
 
+# Prebuilt kernel modules
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/prebuilts/modules,$(TARGET_COPY_OUT_VENDOR)/lib/modules)
+
 # Audio configs & packages
 PRODUCT_PACKAGES += \
     audio.bluetooth.default:32 \
