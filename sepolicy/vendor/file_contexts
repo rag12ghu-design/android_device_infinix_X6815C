@@ -1,4 +1,4 @@
-﻿#
+#
 # Copyright (C) 2024-2026 The LineageOS Project
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -16,7 +16,7 @@
 /data/vendor/multicam(/.*)?                                                             u:object_r:transsion_camera_data_file:s0
 
 # BT
-/(vendor|system\/vendor)/bin/hw/android\.hardware\.bluetooth-service\.mediatek  u:object_r:hal_bluetooth_default_exec:s0
+/(vendor|system\/vendor)/bin/hw/android\.hardware\.bluetooth(@1\.1)?-service.*  u:object_r:hal_bluetooth_default_exec:s0
 
 # Data
 /data/storage_dbg(/.*)?                                                                 u:object_r:storage_dbg_data_file:s0
@@ -47,7 +47,7 @@
 /vendor/lib64/libpn557_fw\.so    u:object_r:nxp_nfc_firmware_file:s0
 
 # Sensor stuff
-/(vendor|system\/vendor)/bin/hw/android\.hardware\.sensors-service(\.multihal)?  u:object_r:hal_sensors_default_exec:s0
+/(vendor|system\/vendor)/bin/hw/android\.hardware\.sensors(@2\.0)?-service.*  u:object_r:hal_sensors_default_exec:s0
 
 # Trancam
 /(system\/vendor|vendor)/bin/hw/vendor\.transsion\.hardware\.trancam\.trancamserver@1\.0-service     u:object_r:trancamserver_exec:s0
@@ -63,4 +63,5 @@
 /sys/devices/platform/odm/odm:tran_battery/OTG_CTL                                     u:object_r:sysfs_OTG_CTL_file:s0
 
 # Vibrator
+/(vendor|system/vendor)/bin/hw/android\.hardware\.vibrator-service\.mediatek          u:object_r:hal_vibrator_default_exec:s0
 /sys/devices/platform/soc/1101a000.i2c/i2c-6/6-005a/leds/vibrator_single(/.*)?           u:object_r:sysfs_vibrator:s0

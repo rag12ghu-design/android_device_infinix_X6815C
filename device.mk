@@ -20,9 +20,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.2-impl \
-    android.hardware.boot@1.2-impl.recovery \
-    android.hardware.boot@1.2-service
+    android.hardware.boot@1.2-impl.recovery
+
 
 PRODUCT_PACKAGES += \
     update_engine \
@@ -53,10 +52,6 @@ PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.1-impl-mock \
     fastbootd
 
-# Health
-PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-impl \
-    android.hardware.health@2.1-service
 
 # Keymaster / Keymint
 PRODUCT_PACKAGES += \
@@ -125,7 +120,9 @@ PRODUCT_COPY_FILES += \
 # Audio configs & packages
 PRODUCT_PACKAGES += \
     audio.bluetooth.default:32 \
-    android.hardware.bluetooth.audio-impl:32
+    android.hardware.bluetooth.audio-impl:32 \
+    libdynproc:32 \
+    libhapticgenerator:32
 
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/configs/audio,$(TARGET_COPY_OUT_VENDOR)/etc) \
@@ -136,14 +133,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/configs/media,$(TARGET_COPY_OUT_VENDOR)/etc)
 
-# Wi-Fi configs & packages
-PRODUCT_PACKAGES += \
-    wpa_supplicant \
-    hostapd \
-    android.hardware.wifi-service
-
+# Wi-Fi configs
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(LOCAL_PATH)/configs/wifi,$(TARGET_COPY_OUT_VENDOR)/etc/wifi)
+
 
 # Hardware feature permissions
 PRODUCT_COPY_FILES += \
