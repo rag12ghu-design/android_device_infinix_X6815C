@@ -2646,3 +2646,23 @@ vendor/res/sound/testpattern1.wav
 vendor/libnfc-nxp_RF.conf
 vendor/ro.prop
 vendor/rw.prop
+
+# MediaTek Hardware Abstraction Layer Implementations (Pulled live from device)
+vendor/lib/hw/android.hardware.audio@6.0-impl-mediatek.so
+vendor/lib/hw/android.hardware.audio@7.0-impl-mediatek.so
+vendor/lib/hw/android.hardware.bluetooth@1.1-impl-mediatek.so
+vendor/lib/hw/android.hardware.boot@1.0-impl-1.2-mtkimpl.so
+vendor/lib/hw/android.hardware.graphics.allocator@4.0-impl-mediatek.so
+vendor/lib/hw/android.hardware.graphics.mapper@4.0-impl-mediatek.so
+vendor/lib/hw/android.hardware.health@2.0-impl-2.1.so
+vendor/lib64/hw/android.hardware.audio@6.0-impl-mediatek.so
+vendor/lib64/hw/android.hardware.audio@7.0-impl-mediatek.so
+vendor/lib64/hw/android.hardware.bluetooth@1.1-impl-mediatek.so
+vendor/lib64/hw/android.hardware.boot@1.0-impl-1.2-mtkimpl.so
+vendor/lib64/hw/android.hardware.camera.provider@2.6-impl-mediatek.so
+vendor/lib64/hw/android.hardware.gnss-impl-mediatek.so
+vendor/lib64/hw/android.hardware.gnss@2.1-impl-mediatek.so
+vendor/lib64/hw/android.hardware.graphics.allocator@4.0-impl-mediatek.so
+vendor/lib64/hw/android.hardware.graphics.mapper@4.0-impl-mediatek.so
+vendor/lib64/hw/android.hardware.health@2.0-impl-2.1.so
+vendor/lib64/hw/android.hardware.sensors@2.X-subhal-mediatek.so

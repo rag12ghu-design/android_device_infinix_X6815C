@@ -1,8 +1,6 @@
-android.hidl.allocator@1.0
+libOpenCL.so
+libnir_neon_driver_ndk.mtk.vndk.so
+libcmdl_ndk.mtk.vndk.so
+libarmnn_ndk.mtk.vndk.so
 libGLES_mali.so
 libion_mtk.so
-libmpbase.so
-libOpenCL.so
-vendor.mediatek.hardware.camera.atms@1.0.so
-vendor.mediatek.hardware.camera.isphal@1.0.so
-vendor.mediatek.hardware.camera.isphal@1.1.so

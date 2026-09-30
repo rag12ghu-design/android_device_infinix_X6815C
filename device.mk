@@ -63,6 +63,14 @@ PRODUCT_PACKAGES += \
     android.hardware.hardware_keystore.km41.xml
 
 # Overlays
+PRODUCT_PACKAGES += \
+    FrameworksResOverlayX6815C \
+    SettingsOverlayX6815C \
+    SettingsProviderOverlayX6815C \
+    SystemUIOverlayX6815C \
+    TetheringResOverlayX6815C \
+    WifiResOverlayX6815C
+
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay
 
@@ -192,6 +200,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt \
     $(LOCAL_PATH)/configs/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf
+
+# Keylayout
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/configs/keylayout,$(TARGET_COPY_OUT_VENDOR)/usr/keylayout) \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/configs/keylayout,$(TARGET_COPY_OUT_SYSTEM)/usr/keylayout)
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
