@@ -5,8 +5,8 @@
     "branch": "lineage-22.2"
   },
   {
-    "repository": "rag12ghu-design/android_device_infinix_X6815C-kernel",
-    "target_path": "device/infinix/X6815C-kernel",
+    "repository": "rag12ghu-design/android_kernel_infinix_mt6877",
+    "target_path": "kernel/infinix/mt6877",
     "branch": "lineage-22.2"
   }
 ]
