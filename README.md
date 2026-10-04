@@ -67,7 +67,7 @@ Create a local manifest in `.repo/local_manifests/x6815c.xml`:
 <manifest>
   <project name="rag12ghu-design/android_device_infinix_X6815C" path="device/infinix/X6815C" remote="github" revision="lineage-22.2" />
   <project name="rag12ghu-design/android_vendor_infinix_X6815C" path="vendor/infinix/X6815C" remote="github" revision="lineage-22.2" />
-  <project name="rag12ghu-design/android_device_infinix_X6815C-kernel" path="kernel/infinix/X6815C" remote="github" revision="lineage-22.2" />
+  <project name="rag12ghu-design/android_device_infinix_X6815C-kernel" path="device/infinix/X6815C-kernel" remote="github" revision="lineage-22.2" />
 </manifest>
 ```
 
