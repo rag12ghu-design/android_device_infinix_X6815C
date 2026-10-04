@@ -58,11 +58,14 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION) --ramdisk_
 BOARD_KERNEL_IMAGE_NAME := Image.gz
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_KERNEL_SEPARATED_DTBO := true
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_HEADER_ARCH := arm64
+TARGET_KERNEL_NO_GCC := true
 TARGET_KERNEL_CONFIG := X6815C_defconfig
-TARGET_KERNEL_SOURCE := kernel/infinix/X6815C
+TARGET_KERNEL_SOURCE := kernel/infinix/mt6877
 
-# Kernel - prebuilt
-TARGET_FORCE_PREBUILT_KERNEL := true
+# Kernel - build toggle (set to true to use stock prebuilt binaries, default false for in-tree source)
+TARGET_FORCE_PREBUILT_KERNEL ?= false
 ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilts/kernel
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilts/dtb.img
