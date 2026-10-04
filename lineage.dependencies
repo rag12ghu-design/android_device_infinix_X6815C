@@ -1,0 +1,12 @@
+[
+  {
+    "repository": "rag12ghu-design/android_vendor_infinix_X6815C",
+    "target_path": "vendor/infinix/X6815C",
+    "branch": "lineage-22.2"
+  },
+  {
+    "repository": "rag12ghu-design/android_device_infinix_X6815C-kernel",
+    "target_path": "kernel/infinix/X6815C",
+    "branch": "lineage-22.2"
+  }
+]
