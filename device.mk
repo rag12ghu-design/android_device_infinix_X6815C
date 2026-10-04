@@ -52,6 +52,9 @@ PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.1-impl-mock \
     fastbootd
 
+# Graphics
+PRODUCT_PACKAGES += \
+    vulkan.mali
 
 # Keymaster / Keymint
 PRODUCT_PACKAGES += \
